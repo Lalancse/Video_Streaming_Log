@@ -1,6 +1,6 @@
 # Video_Streaming_Log
 <p>
-This repository contains two types of video streaming logs, collected under different Adaptive Bitrate (ABR) algorithms — <strong>BOLA</strong> and <strong>Throughput-based</strong> — on the client side. The logs are intended for analysis of video streaming Quality of Experience (QoE) under various <strong>Congestion Control Algorithms (CCAs)</strong> and <strong>network conditions</strong>.
+We presents two types of video streaming logs, collected under different Adaptive Bitrate (ABR) algorithms — <strong>BOLA</strong> and <strong>Throughput-based</strong> — on the client side. The logs are intended for analysis of video streaming Quality of Experience (QoE) under various <strong>Congestion Control Algorithms (CCAs)</strong> and <strong>network conditions</strong>.
 </p>
 
 <h2>Log Categories</h2>
