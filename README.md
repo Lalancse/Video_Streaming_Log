@@ -231,7 +231,7 @@ your local system.
 <pre><code>.
 ├── README.md
 ├── Dataset.png
-├── network_setup_random_loss.sh
+├── run-server.sh
 ├── Paper_Video_Streaming_Log/
 └── Old_Video_Streaming_Log/</code></pre>
 
