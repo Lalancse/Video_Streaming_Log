@@ -226,23 +226,6 @@ Before execution, update the trace and log paths in the script according to
 your local system.
 </p>
 
-<h2>Reviewer Response</h2>
-
-<blockquote>
-<p>
-<strong>Response:</strong> We thank the reviewer for pointing this out.
-The packet loss in our experiments is generated using Linux
-<code>tc/netem</code> with the <code>loss random 3%</code> configuration.
-Thus, the packet loss is random/independent rather than bursty or
-temporally correlated. We have clarified this in the revised manuscript
-and noted that real wireless environments may exhibit correlated or
-bursty losses. Therefore, our results should be interpreted as an
-evaluation under random packet-loss conditions.
-</p>
-</blockquote>
-
-<hr />
-
 <h2>Repository Structure</h2>
 
 <pre><code>.
