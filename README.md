@@ -231,33 +231,6 @@ temporally correlated loss conditions.
 
 <hr />
 
-<h2>Reproducibility</h2>
-
-<p>
-The complete random packet-loss network configuration is provided in:
-</p>
-
-<pre><code>network_setup_random_loss.sh</code></pre>
-
-<p>
-Make the script executable using:
-</p>
-
-<pre><code>chmod +x network_setup_random_loss.sh</code></pre>
-
-<p>
-Run the network configuration using:
-</p>
-
-<pre><code>./network_setup_random_loss.sh</code></pre>
-
-<p>
-Before execution, update the network trace paths, interface names, and
-logging paths according to the local experimental setup.
-</p>
-
-<hr />
-
 <h2>Running the Video Streaming Experiment</h2>
 
 <p>
