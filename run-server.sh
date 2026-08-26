@@ -15,10 +15,18 @@ sleep 1
 echo 'Starting tc configuration...'
 
 # Step 1: Apply netem with handle
-sudo tc qdisc add dev ingress root handle 1: tbf rate 20mbit buffer 1500 limit 10MB
-sudo tc qdisc add dev ingress parent 1:1 handle 30: netem limit 7000 delay 100ms loss random 3%
+sudo tc qdisc del dev ingress root 2>/dev/null
+# To apply random loss
+#sudo tc qdisc add dev ingress root handle 1: tbf rate 20mbit buffer 1500 limit 10MB
+#sudo tc qdisc add dev ingress parent 1:1 handle 30: netem limit 7000 delay 100ms loss random 3%
 
+# To apply bursty loss
+#sudo tc qdisc add dev ingress root handle 1: tbf rate 20mbit buffer 1500 limit 10MB
+#sudo tc qdisc add dev ingress parent 1:1 handle 30: netem limit 7000 delay 100ms loss state 3 25
 
+# To apply 100ms delay
+#sudo tc qdisc add dev ingress root handle 1: tbf rate 20mbit buffer 1500 limit 10MB
+#sudo tc qdisc add dev ingress parent 1:1 handle 30: netem limit 7000 delay 100ms
 
 echo 'Starting QUIC server...'
 
