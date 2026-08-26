@@ -1,21 +1,31 @@
 # Video_Streaming_Log
 
 <p>
-We present two types of video streaming logs, collected under different
-Adaptive Bitrate (ABR) algorithms — <strong>BOLA</strong> and
-<strong>Throughput-based</strong> — on the client side. The logs are intended
-for analysis of video streaming Quality of Experience (QoE) under various
-<strong>Congestion Control Algorithms (CCAs)</strong> and
-<strong>network conditions</strong>.
+This repository provides video streaming logs collected under different
+<strong>Adaptive Bitrate (ABR) algorithms</strong>, <strong>Congestion Control Algorithms (CCAs)</strong>,
+and <strong>network conditions</strong>. The dataset is intended to facilitate the analysis of
+video streaming <strong>Quality of Experience (QoE)</strong> and the behavior of different
+transport-layer congestion control algorithms.
 </p>
+
+<p>
+Two client-side ABR algorithms are considered:
+</p>
+
+<ul>
+  <li><strong>BOLA</strong> (buffer-based ABR)</li>
+  <li><strong>Throughput-based</strong> ABR</li>
+</ul>
+
+<hr />
 
 <h2>Log Categories</h2>
 
 <h3>1. <code>Paper_Video_Streaming_Log</code></h3>
 
 <p>
-These logs were used in the research paper and cover experiments conducted
-with the following Congestion Control Algorithms:
+These logs correspond to the experiments used in the research paper. The
+following Congestion Control Algorithms were evaluated:
 </p>
 
 <ul>
@@ -25,30 +35,37 @@ with the following Congestion Control Algorithms:
   <li>Reno</li>
 </ul>
 
-<p>Each CCA was evaluated under diverse network conditions:</p>
+<p>
+Each CCA was evaluated under different bandwidth, buffer size, network delay,
+and packet-loss conditions.
+</p>
 
-<p><strong>(a) Bandwidth Variations</strong></p>
+<h4>(a) Bandwidth Variations</h4>
+
 <ul>
   <li>1 Mbps</li>
   <li>10 Mbps</li>
   <li>20 Mbps</li>
 </ul>
 
-<p><strong>(b) Buffer Sizes</strong></p>
+<h4>(b) Buffer Sizes</h4>
+
 <ul>
   <li>10 KB</li>
   <li>100 KB</li>
   <li>1 MB</li>
 </ul>
 
-<p><strong>(c) Network Delays</strong></p>
+<h4>(c) Network Delays</h4>
+
 <ul>
   <li>100 ms</li>
   <li>200 ms</li>
   <li>300 ms</li>
 </ul>
 
-<p><strong>(d) Packet Loss Rates</strong></p>
+<h4>(d) Packet Loss Rates</h4>
+
 <ul>
   <li>0%</li>
   <li>3%</li>
@@ -60,14 +77,19 @@ with the following Congestion Control Algorithms:
 <h3>2. <code>Old_Video_Streaming_Log</code></h3>
 
 <p>
-These logs were collected in a separate setup using
-<strong>Mahimahi</strong> to emulate a virtual network environment.
-The same CCAs — BBR, BBRv2, Cubic, and Reno — were tested. The bitrate is
-consistent with that used in the paper, and the video duration for each log
-is <strong>15 minutes</strong>.
+These logs were collected using a separate experimental setup in which
+<strong>Mahimahi</strong> was used to emulate the network environment.
+The same CCAs—BBR, BBRv2, Cubic, and Reno—were evaluated.
 </p>
 
-<p><strong>(a) Packet Loss Variations</strong></p>
+<p>
+The video bitrates are consistent with those used in the paper, and the
+video duration for each experimental run is approximately
+<strong>15 minutes</strong>.
+</p>
+
+<h4>(a) Packet Loss Variations</h4>
+
 <ul>
   <li>1%</li>
   <li>3%</li>
@@ -76,7 +98,8 @@ is <strong>15 minutes</strong>.
   <li>10%</li>
 </ul>
 
-<p><strong>(b) Bandwidth Conditions (with 0% packet loss)</strong></p>
+<h4>(b) Bandwidth Conditions with 0% Packet Loss</h4>
+
 <ul>
   <li>350 Kbps</li>
   <li>500 Kbps</li>
@@ -90,13 +113,14 @@ is <strong>15 minutes</strong>.
 <h2>ABR Algorithms Used</h2>
 
 <ul>
-  <li><strong>BOLA</strong></li>
-  <li><strong>Throughput-based</strong></li>
+  <li><strong>BOLA</strong> — Buffer-based adaptive bitrate algorithm</li>
+  <li><strong>Throughput-based</strong> — Throughput-based adaptive bitrate algorithm</li>
 </ul>
 
 <p>
-Both log sets include performance data for these ABR algorithms to compare
-QoE under identical network and CCA conditions.
+Both log categories contain performance data obtained using these ABR
+algorithms, allowing the QoE of different CCAs to be compared under
+identical network conditions.
 </p>
 
 <img src="Dataset.png" alt="Flow of the video streaming log dataset" width="800">
@@ -120,7 +144,8 @@ https://skuld.cs.umass.edu/traces/mmsys/2013/pathbandwidth/car.snaroya-smestad/
 
 <p>
 The trace provides separate uplink and downlink network conditions and is
-used with Mahimahi's <code>mm-link</code> for trace-driven network emulation.
+used with Mahimahi's <code>mm-link</code> to reproduce
+<strong>time-varying network conditions</strong>.
 </p>
 
 <h3>Trace Setup</h3>
@@ -134,7 +159,7 @@ and specify their locations in the experiment script:
 DOWNLINK="/path/to/car-snaroya-smestad.down"</code></pre>
 
 <p>
-The trace can be started using:
+The trace-driven network environment can be started using:
 </p>
 
 <pre><code>mm-link "$UPLINK" "$DOWNLINK" -- bash</code></pre>
@@ -144,9 +169,13 @@ The trace can be started using:
 <h2>Network Configuration</h2>
 
 <p>
-In addition to the Mahimahi trace, the experiment applies Linux
-<strong>tc/netem</strong> to introduce controlled network conditions.
-The configuration used for the random-loss experiment is:
+In addition to Mahimahi's trace-driven emulation, Linux
+<strong>tc/netem</strong> is used to introduce controlled network conditions,
+including bandwidth limitation, network delay, and packet loss.
+</p>
+
+<p>
+An example configuration used for the random packet-loss experiments is:
 </p>
 
 <ul>
@@ -156,7 +185,7 @@ The configuration used for the random-loss experiment is:
   <li><strong>Packet-loss model:</strong> Random/independent</li>
   <li><strong>TBF buffer:</strong> 1500 bytes</li>
   <li><strong>TBF queue limit:</strong> 10 MB</li>
-  <li><strong>netem queue limit:</strong> 7000 packets</li>
+  <li><strong>NetEm queue limit:</strong> 7000 packets</li>
 </ul>
 
 <h3>tc/netem Configuration</h3>
@@ -176,27 +205,28 @@ sudo tc qdisc add dev ingress parent 1:1 handle 30: netem \
 <h2>Packet Loss Model</h2>
 
 <p>
-The configuration uses:
+The original packet-loss experiments use:
 </p>
 
 <pre><code>loss random 3%</code></pre>
 
 <p>
-This specifies a <strong>random/independent packet-loss model</strong>
-with a nominal loss probability of 3%. It does <strong>not</strong>
-represent bursty or temporally correlated packet loss.
+This configuration specifies a <strong>random/independent packet-loss model</strong>
+with a nominal packet-loss probability of 3%. Therefore, the original
+packet-loss experiments should be interpreted as evaluations under
+<strong>uniform random packet-loss conditions</strong>.
 </p>
 
 <p>
-Therefore, the experiments should be interpreted as evaluations under
-<strong>random packet-loss conditions</strong>. Real wireless networks may
-also exhibit bursty or correlated losses due to fading, interference,
-mobility, and changing channel conditions.
+Random packet loss does not fully represent wireless environments, where
+packet losses may occur in bursts because of fading, interference, mobility,
+and rapidly changing channel conditions.
 </p>
 
 <p>
-Consequently, the current configuration should not be considered a complete
-model of all wireless environments.
+To account for this behavior, additional experiments can use a
+<strong>bursty packet-loss model</strong> to evaluate the CCAs under
+temporally correlated loss conditions.
 </p>
 
 <hr />
@@ -204,27 +234,197 @@ model of all wireless environments.
 <h2>Reproducibility</h2>
 
 <p>
-The complete network configuration is provided in:
+The complete random packet-loss network configuration is provided in:
 </p>
 
 <pre><code>network_setup_random_loss.sh</code></pre>
 
 <p>
-Make the script executable:
+Make the script executable using:
 </p>
 
 <pre><code>chmod +x network_setup_random_loss.sh</code></pre>
 
 <p>
-Run the experiment using:
+Run the network configuration using:
 </p>
 
 <pre><code>./network_setup_random_loss.sh</code></pre>
 
 <p>
-Before execution, update the trace and log paths in the script according to
-your local system.
+Before execution, update the network trace paths, interface names, and
+logging paths according to the local experimental setup.
 </p>
+
+<hr />
+
+<h2>Running the Video Streaming Experiment</h2>
+
+<p>
+The experimental setup consists of a <strong>Chromium Toy QUIC Server</strong>,
+the <strong>DASH.js reference player</strong> running on the client side,
+and a Python-based logger that collects DASH.js runtime statistics.
+</p>
+
+<h3>1. Start the Chromium Toy QUIC Server</h3>
+
+<p>
+The server is implemented using the <strong>Chromium Toy QUIC Server</strong>.
+Navigate to the Chromium source directory (<code>depot_tools/src</code>) and
+execute the <code>run-serve.sh</code> shell script:
+</p>
+
+<pre><code>./run-serve.sh</code></pre>
+
+<p>
+The <code>run-serve.sh</code> script contains the required server-side
+commands and configurations. It also contains the commands required for
+<strong>server-side logging</strong>.
+</p>
+
+<hr />
+
+<h3>2. Start the DASH.js Development Server</h3>
+
+<p>
+Navigate to the <code>dash.js</code> directory and execute:
+</p>
+
+<pre><code>sudo npm run start</code></pre>
+
+<p>
+This starts the DASH.js development server and makes the DASH.js
+reference player available through the local web server.
+</p>
+
+<hr />
+
+<h3>3. Launch Chromium with QUIC Enabled</h3>
+
+<p>
+Open another terminal and execute:
+</p>
+
+<pre><code>chromium-browser \
+    --user-data-dir=/tmp/chrome-profile \
+    --no-proxy-server \
+    --enable-quic \
+    --origin-to-force-quic-on=www.example.org:443 \
+    --host-resolver-rules='MAP www.example.org:443 192.168.31.86:6121' \
+    --disable-web-security \
+    http://localhost:3000/samples/dash-if-reference-player/index.html</code></pre>
+
+<p>
+The command enables QUIC in Chromium and maps
+<code>www.example.org:443</code> to the Chromium Toy QUIC Server running
+at:
+</p>
+
+<pre><code>192.168.31.86:6121</code></pre>
+
+<p>
+<strong>Note:</strong> The IP address <code>192.168.31.86</code> corresponds
+to the server address used in our experimental setup. It should be replaced
+with the appropriate server IP address when reproducing the experiment on
+another system.
+</p>
+
+<hr />
+
+<h3>4. Start the Client-Side Logger</h3>
+
+<p>
+The <code>logger.py</code> script is used to collect runtime information from
+the DASH.js player. Run the logger and specify the desired output file name.
+For example:
+</p>
+
+<pre><code>python3 logger.py BBR_3%_Bola_1</code></pre>
+
+<p>
+In this example:
+</p>
+
+<ul>
+  <li><code>BBR</code> represents the congestion control algorithm.</li>
+  <li><code>3%</code> represents the packet-loss rate.</li>
+  <li><code>Bola</code> represents the client-side ABR algorithm.</li>
+  <li><code>1</code> represents the experimental run number.</li>
+</ul>
+
+<p>
+The logger collects DASH.js runtime statistics at an interval of
+<strong>100 ms</strong>. These measurements are subsequently used to analyze
+the behavior of the streaming session and calculate video streaming QoE.
+</p>
+
+<h4>DASH.js Logging Modification</h4>
+
+<p>
+To collect the required runtime statistics, modifications are made to the
+DASH.js reference player's <code>main.js</code> file located at:
+</p>
+
+<pre><code>dash.js/samples/dash-if-reference-player/app/main.js</code></pre>
+
+<p>
+The modified code periodically obtains the required DASH.js player statistics,
+which are then captured by <code>logger.py</code>.
+</p>
+
+<hr />
+
+<h3>5. Load and Play the DASH Video</h3>
+
+<p>
+After launching the DASH.js reference player, enter the following DASH
+manifest URL (<code>.mpd</code>) in the player's URL field:
+</p>
+
+<pre><code>https://www.example.org/output.mpd</code></pre>
+
+<p>
+Click <strong>Load</strong> to start the video playback.
+The DASH client will request video segments from the Chromium Toy QUIC Server
+while the client-side and server-side logging mechanisms collect the
+corresponding experimental data.
+</p>
+
+<hr />
+
+<h3>Complete Experiment Execution Sequence</h3>
+
+<pre><code>1. Configure the Network Environment
+              |
+              v
+2. Start the Chromium Toy QUIC Server
+              |
+              v
+3. Start the DASH.js Development Server
+              |
+              v
+4. Launch Chromium with QUIC Enabled
+              |
+              v
+5. Start the Client-Side Logger
+              |
+              v
+6. Enter the DASH Manifest URL
+              |
+              v
+7. Load and Play the Video
+              |
+              v
+8. Collect Client- and Server-Side Logs</code></pre>
+
+<p>
+Before reproducing the experiments, ensure that the
+<strong>network interface, server IP address, server port, Mahimahi trace
+paths, video manifest path, and output log paths</strong> are configured
+according to the local system.
+</p>
+
+<hr />
 
 <h2>Repository Structure</h2>
 
@@ -232,8 +432,20 @@ your local system.
 ├── README.md
 ├── Dataset.png
 ├── run-server.sh
+├── network_setup_random_loss.sh
 ├── Paper_Video_Streaming_Log/
 └── Old_Video_Streaming_Log/</code></pre>
 
-</body>
-</html>
+<hr />
+
+<h2>Summary</h2>
+
+<p>
+This repository provides video streaming logs for analyzing the interaction
+between <strong>Congestion Control Algorithms</strong>,
+<strong>Adaptive Bitrate algorithms</strong>, and different
+<strong>network conditions</strong>. The provided experiment configuration,
+network emulation setup, execution procedure, and logging mechanism are
+intended to support the reproducibility and further analysis of the reported
+video streaming experiments.
+</p>
